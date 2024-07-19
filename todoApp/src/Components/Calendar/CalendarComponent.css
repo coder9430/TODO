@@ -1,0 +1,99 @@
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.heading {
+  margin-bottom: 20px;
+  font-weight: bold; /* Make the text bolder */
+  
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add a shadow for better visibility */
+  color:white
+}
+
+.react-calendar {
+  border: 1px solid #ddd;
+  border-radius: 10px; /* Add border radius */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow to the calendar card */
+  background-color:#ffffd4;
+}
+
+/* Tile styles */
+.react-calendar__tile {
+  color: black; /* Default color for all dates */
+}
+
+.react-calendar__tile--now {
+  background: #ffff00 !important; /* Highlight the current date */
+}
+
+.react-calendar__tile--active {
+  background: #ffff00 !important; /* Highlight the selected date */
+  color: black !important;
+}
+
+.react-calendar__tile--disabled {
+  color: black !important; /* Change color of disabled dates (usually past dates) */
+}
+
+.react-calendar__tile--range {
+  background: #ffeb3b !important; /* Optional: highlight the range if selecting range */
+  color: black !important;
+}
+
+/* Add styling for the calendar header (month) */
+.react-calendar__navigation button {
+  color: black !important; /* Change color of the month header */
+}
+
+/* Add styling for the calendar navigation arrows */
+.react-calendar__navigation button:disabled {
+  color: rgba(0, 0, 0, 0.38); /* Disabled state for navigation buttons */
+}
+
+p {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.card {
+  background: white; /* Adjust the card background if necessary */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow to the card */
+  position: relative;
+}
+
+.add-todo-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.add-todo-button:hover {
+  background-color: #0056b3;
+}
+
+/* Add fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

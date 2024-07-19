@@ -1,0 +1,56 @@
+
+.card {
+    width: 100%;
+    margin-top: 1rem;
+  }
+  
+  .table {
+    margin-bottom: 0;
+  }
+  
+  .navbar-toggler {
+    border: none;
+  }
+  
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,<svg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'><path stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' linecap='round' linejoin='round' d='M4 7h22M4 15h22M4 23h22'/></svg>");
+  }
+  
+  .nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.5rem 0;
+  }
+  
+  .nav-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+  
+  .nav-link {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .border-bottom {
+    border-bottom: 1px solid #dee2e6;
+  }
+  
+  .nav-link img {
+    margin-right: 8px;
+  }
+  
+  .navbar-nav {
+    width: 100%;
+  }
+  
+  .nav-item span {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
