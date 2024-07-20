@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Lottie from 'react-lottie';
 import './DashboardHome.css';
 import hello from '../../hello.json';
 
 function DashboardHome() {
   const [greeting, setGreeting] = useState('');
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const hours = new Date().getHours();
@@ -29,7 +29,7 @@ function DashboardHome() {
   };
 
   const handleAddTodo = () => {
-    history.push('/add-todo');
+    navigate('/add-todo');
   };
 
   return (

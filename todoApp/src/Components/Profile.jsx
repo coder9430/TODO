@@ -33,7 +33,7 @@ function Profile() {
             marginBottom: '20px' 
           }} 
         />
-        <h5 style={{ marginBottom: '10px',marginBottom: '20px',fontWeight: 'bold',textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)',color: 'white',textAlign: 'center' }}>SAPNA RANI</h5>
+        <h5 style={{ marginBottom: '10px',marginBottom: '20px',fontWeight: 'bold',textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)',color: 'black',textAlign: 'center' }}>SAPNA RANI</h5>
         <h6 style={{ marginBottom: '10px' }}>sapnarani14september@gmail.com</h6>
       </div>
     </div>

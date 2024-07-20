@@ -9,9 +9,9 @@ function HomePage() {
     return (
         <div >
           <Navbar />
-          <div className="container mt-1 mb-1">
-            <div className="row">
-              <div className="col-lg-3 col-12 order-lg-1 order-1">
+          <div >
+            <div className="row" style={{width:'100%',height:'100%'}}>
+              <div className="col-lg-3 col-12 order-lg-1 order-1" >
                 <Tab />
               </div>
               <div className="col-lg-9 col-12 order-lg-2 order-2">

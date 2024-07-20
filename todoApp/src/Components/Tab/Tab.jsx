@@ -1,15 +1,15 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Use useNavigate instead of useHistory
 import "./Tab.css";
 
 function Tab() {
-  const history = useHistory();
+  const navigate = useNavigate(); // Use useNavigate instead of useHistory
 
   const handleLogout = () => {
     // Implement the logic to log out the user
     console.log('User logged out');
     // Redirect to the home page or login page after logout
-    history.push('/login'); // Assuming you have a login route
+    navigate('/login'); // Assuming you have a login route
   };
 
   return (

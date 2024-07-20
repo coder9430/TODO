@@ -1,0 +1,24 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    height: 56vh; /* Full viewport height */
+  }
+  
+  .row {
+    display: flex;
+    flex-grow: 1;
+  }
+  
+  .col-lg-4, .col-lg-8 {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .col-lg-4 {
+    height: 100%; /* Ensure this column takes full height */
+  }
+  
+  .col-lg-8 {
+    height: 100%; /* Ensure this column takes full height */
+  }
+  

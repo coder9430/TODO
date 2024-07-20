@@ -3,14 +3,14 @@ import Navbar from '../../Components/Navbar';
 import Tab from '../../Components/Tab/Tab';
 import TodoFrom from '../../Components/TodoForm'
 import Footer from '../../Components/Footer';
-
+import './Addtodo.css'
 
 function AddtodoPage() {
     return (
         <div >
           <Navbar />
-          <div className="container mt-1 mb-1">
-            <div className="row">
+          <div >
+            <div className="row"style={{width:'100%',height:'100%'}}>
               <div className="col-lg-3 col-12 order-lg-1 order-1">
                 <Tab />
               </div>
