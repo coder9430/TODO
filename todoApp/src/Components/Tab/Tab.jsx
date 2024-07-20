@@ -1,8 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import "./Tab.css";
 
-import "./Tab.css"
 function Tab() {
+  const history = useHistory();
+
+  const handleLogout = () => {
+    // Implement the logic to log out the user
+    console.log('User logged out');
+    // Redirect to the home page or login page after logout
+    history.push('/login'); // Assuming you have a login route
+  };
+
   return (
     <>
       <nav className="navbar navbar-expand-sm">
@@ -14,28 +23,28 @@ function Tab() {
             <div className="collapse navbar-collapse" id="navbarContent">
               <table className="table table-hover">
                 <tbody className="navbar-nav flex-column">
-                <tr className="nav-item">
+                  <tr className="nav-item">
                     <td className="nav-link d-flex align-items-center border-bottom">
-                      {/* <img src="https://cdn-icons-png.flaticon.com/128/15383/15383003.png" alt="Profile Icon" className="nav-icon" /> */}
-                      <span>HOME</span>
+                      <img src="https://cdn-icons-png.flaticon.com/128/25/25694.png" alt="Profile Icon" className="nav-icon" />
+                      <Link to="/" className="nav-link">HOME</Link>
                     </td>
                   </tr>
                   <tr className="nav-item">
                     <td className="nav-link d-flex align-items-center border-bottom">
-                      {/* <img src="https://cdn-icons-png.flaticon.com/128/15383/15383003.png" alt="Profile Icon" className="nav-icon" /> */}
-                      <span>PROFILE</span>
+                      <img src="https://cdn-icons-png.flaticon.com/128/1077/1077114.png" alt="Profile Icon" className="nav-icon" />
+                      <Link to="/profile" className="nav-link">PROFILE</Link>
                     </td>
                   </tr>
                   <tr className="nav-item">
                     <td className="nav-link d-flex align-items-center border-bottom">
-                      {/* <img src="https://cdn-icons-png.flaticon.com/128/9653/9653907.png" alt="Logout Icon" className="nav-icon" /> */}
-                      <span>LOG OUT</span>
+                      <img src="https://cdn-icons-png.flaticon.com/128/5509/5509651.png" alt="Logout Icon" className="nav-icon" />
+                      <span className="nav-link" onClick={handleLogout}>LOG OUT</span>
                     </td>
                   </tr>
                   <tr className="nav-item">
                     <td className="nav-link d-flex align-items-center border-bottom">
-                      {/* <img src="https://cdn-icons-png.flaticon.com/128/9653/9653907.png" alt="Logout Icon" className="nav-icon" /> */}
-                      <span>LIST OF TO DO</span>
+                      <img src="https://cdn-icons-png.flaticon.com/128/1950/1950630.png" alt="List" className="nav-icon" />
+                      <Link to="/list-of-todo" className="nav-link">LIST OF TO DO</Link>
                     </td>
                   </tr>
                 </tbody>

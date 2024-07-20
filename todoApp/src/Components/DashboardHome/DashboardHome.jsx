@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import Lottie from 'react-lottie';
 import './DashboardHome.css';
-import hello from '../../hello.json'; 
+import hello from '../../hello.json';
 
 function DashboardHome() {
   const [greeting, setGreeting] = useState('');
+  const history = useHistory();
 
   useEffect(() => {
     const hours = new Date().getHours();
@@ -27,8 +29,7 @@ function DashboardHome() {
   };
 
   const handleAddTodo = () => {
-    // Implement the logic to add a new todo item
-    console.log('Add todo button clicked');
+    history.push('/add-todo');
   };
 
   return (
@@ -36,9 +37,9 @@ function DashboardHome() {
       className="card"
       style={{
         backgroundImage: 'url(https://img.freepik.com/free-vector/sunset-nature-landscape_1308-25611.jpg?size=626&ext=jpg&ga=GA1.1.438524074.1691181102&semt=ais_user)',
-        backgroundSize: 'cover', // Make sure the background image covers the entire div
-        backgroundPosition: 'center', // Center the background image
-        backgroundRepeat: 'no-repeat', // Prevent background image from repeating
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
         opacity: 0.9
       }}
     >
@@ -49,8 +50,8 @@ function DashboardHome() {
         <div className='col'>
           <h1 className="greeting">{greeting}</h1>
         </div>
-      </div>
-      <button className="addbutton" onClick={handleAddTodo}>
+      </div >
+      <button className="addButton" onClick={handleAddTodo}>
         +
       </button>
     </div>
