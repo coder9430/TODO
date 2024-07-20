@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import for navigation
+import { useNavigate } from 'react-router-dom';
 import Lottie from 'react-lottie';
 import tiger from '../../tiger.json';
-import './LoginPage.css';
+import './SigninPage.css';
 
-function LoginPage() {
-  const navigate = useNavigate(); // Use hook for navigation
+function SigninPage() {
+  const navigate = useNavigate();
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -21,16 +22,10 @@ function LoginPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const users = JSON.parse(localStorage.getItem('users')) || [];
-    const user = users.find(user => user.email === email && user.password === password);
-
-    if (user) {
-      // User found, proceed with login (handle as needed)
-      alert('Login successful!');
-    } else {
-      // User not found, redirect to sign-up page
-      alert('User not found, redirecting to Sign Up');
-      navigate('/signup');
-    }
+    users.push({ username, email, password });
+    localStorage.setItem('users', JSON.stringify(users));
+    alert('User registered successfully!');
+    navigate('/login');
   };
 
   return (
@@ -45,6 +40,16 @@ function LoginPage() {
             <div className="col-12 col-lg-8">
               <div className="form-card">
                 <form onSubmit={handleSubmit}>
+                  <div className="mb-4">
+                    <label htmlFor="username" className="form-label">Username</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="username"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                    />
+                  </div>
                   <div className="mb-4">
                     <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
                     <input 
@@ -68,9 +73,9 @@ function LoginPage() {
                     />
                   </div>
                   <div className="mb-4 form-check">
-                    <label className="form-check-label" htmlFor="exampleCheck1">If you don't have an account click here <a href="#" onClick={() => navigate('/signup')}>Sign Up</a></label>
+                    <label className="form-check-label" htmlFor="exampleCheck1">If you already have an account click here <a href="#" onClick={() => navigate('/login')}>Login</a></label>
                   </div>
-                  <button type="submit" className="btn btn-dark mb-3">Login</button>
+                  <button type="submit" className="btn btn-dark mb-3">Sign Up</button>
                 </form>
               </div>
             </div>
@@ -81,4 +86,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default SigninPage;

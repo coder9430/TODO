@@ -5,6 +5,7 @@ import ProfilePage from './Pages/ProfilePage/ProfilePage';
 import AddTodoPage from './Pages/AddtodoPage/AddtodoPage';
 import ListoftodoPage from './Pages/Listoftodo/ListoftodoPage'; // Assuming you have this component
 import LoginPage from './Pages/Login/LoginPage'; // Assuming you have this component
+import SignupPage from './Pages/SigninPage/SigninPage';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/add-todo" element={<AddTodoPage />} />
         <Route path="/list-of-todo" element={<ListoftodoPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
       </Routes>
     </Router>
   );
