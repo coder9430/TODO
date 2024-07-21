@@ -106,6 +106,8 @@ npm install react-dom@^18.3.1
 npm install react-lottie@^1.2.4
 npm install react-router-dom@^6.25.1
 npm install router@^1.3.8
+npm install @mui/material @emotion/react @emotion/styled
+npm install @mui/icons-material
 
 ```
 3.Run the development server:
