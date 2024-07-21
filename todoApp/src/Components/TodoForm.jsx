@@ -1,6 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function TodoForm() {
+  const [date, setDate] = useState('');
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const todos = JSON.parse(localStorage.getItem('todos')) || [];
+    const token = localStorage.getItem("token")
+    const newTodo = { date, title, description };
+  //json amin he store karenge n
+  console.log("token",token)
+  try {
+    const response = await fetch('http://localhost:3000/api/todo/', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newTodo),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to submit form');
+    }
+
+    setDate('');
+    setTitle('');
+    setDescription('');
+
+    alert('Todo added successfully!');
+   
+  } catch (error) {
+    console.error('Error submitting form:', error);
+  }
+    
+    
+    
+   
+  };
+
   return (
     <div>
       <h3 style={{ 
@@ -23,7 +63,7 @@ function TodoForm() {
           margin: 'auto'
         }}
       >
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="row" style={{ marginBottom: '50px' }}>
             <div className="col" style={{ marginBottom: '10px' }}>
               <input 
@@ -37,6 +77,9 @@ function TodoForm() {
                   borderRadius: '4px', 
                   border: '1px solid #ccc' 
                 }}
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                required
               />
             </div>
             <div className="col">
@@ -51,6 +94,9 @@ function TodoForm() {
                   borderRadius: '4px', 
                   border: '1px solid #ccc' 
                 }}
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
               />
             </div>
           </div>
@@ -67,6 +113,8 @@ function TodoForm() {
                   borderRadius: '4px', 
                   border: '1px solid #ccc' 
                 }}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
             </div>
           </div>
@@ -80,7 +128,7 @@ function TodoForm() {
                 backgroundColor: 'black', 
                 border: 'none', 
                 color: 'white', 
-                cursor: 'pointer' ,
+                cursor: 'pointer',
                 margin:'20px'
               }}
             >
@@ -95,7 +143,7 @@ function TodoForm() {
         textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)',
         color: 'black',
         textAlign: 'center'
-      }}>"The secret of getting ahead is getting started.</h6>
+      }}>"The secret of getting ahead is getting started."</h6>
     </div>
   );
 }

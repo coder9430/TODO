@@ -8,7 +8,7 @@ function Footer() {
       padding: '10px 0',
       textAlign: 'center'
     }}>
-      <div className="container py-3">
+      <div className="container1 py-3">
         <p className="mb-0" style={{ margin: '0', fontSize: '14px',color:'white' }}>© TO DO APP</p>
       </div>
     </footer>

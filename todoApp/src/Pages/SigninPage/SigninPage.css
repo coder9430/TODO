@@ -28,7 +28,7 @@
     
   }
   
-  .card {
+  #signinCard {
     padding: 20px;
     background-color: #ffffd4;
     border-radius: 8px;

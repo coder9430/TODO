@@ -1,16 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import Navbar from '../../Components/Navbar';
 import Tab from '../../Components/Tab/Tab';
 import Footer from '../../Components/Footer';
 import Todolist from '../../Components/Todolist';
-import './CalendarPage.css'
+import './CalendarPage.css';
 
 function CalendarPage() {
+  const location = useLocation();
+  const [todos, setTodos] = useState([]);
+  const [selectedDate,setSelectedDate] = useState('')
+  
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+  setSelectedDate(queryParams.get('date'))
+  }, [location]);
+
   return (
     <div>
       <Navbar />
-      <div >
-        <div className="row"style={{width:'100%',height:'100%'}}>
+      <div>
+        <div className="row" style={{ width: '100%', height: '100%' }}>
           <div className="col-lg-3 col-12 order-lg-1 order-1">
             <Tab />
           </div>
@@ -24,7 +35,7 @@ function CalendarPage() {
               width: '100%',
               height: '500px'
             }}>
-              <h3 style={{ 
+              <h3 style={{
                 margin: '40px',
                 fontWeight: 'bold',
                 textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)',
@@ -33,7 +44,7 @@ function CalendarPage() {
               }}>
                 LIST OF TODAY'S TO DO
               </h3>
-              <Todolist />
+              <Todolist initialDate={selectedDate} />
             </div>
           </div>
         </div>

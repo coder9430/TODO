@@ -6,9 +6,11 @@ import './SigninPage.css';
 
 function SigninPage() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [userData, setUserData] = useState({
+    username: "",
+    email: "",
+    password: ""
+  });
 
   const defaultOptions = {
     loop: true,
@@ -19,20 +21,48 @@ function SigninPage() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    users.push({ username, email, password });
-    localStorage.setItem('users', JSON.stringify(users));
-    alert('User registered successfully!');
-    navigate('/login');
+    console.log(userData)
+    
+    try {
+        const response = await fetch('http://localhost:3000/api/auth/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userData),
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to submit form');
+        }
+  
+        setUserData({
+          username:'',
+          email:'',
+          password:''
+        });
+        alert("Signup completed successfully")
+        navigate("/login")
+      } catch (error) {
+        console.error('Error submitting form:', error);
+      }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
   };
 
   return (
     <div className="background-container">
       <div className="background-overlay"></div>
       <div className="content-container">
-        <div className="card">
+        <div className="card" id='signinCard'>
           <div className="row">
             <div className="col-12 col-lg-4">
               <Lottie options={defaultOptions} height={400} width={400} />
@@ -44,21 +74,23 @@ function SigninPage() {
                     <label htmlFor="username" className="form-label">Username</label>
                     <input
                       type="text"
+                      name="username"
                       className="form-control"
                       id="username"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      value={userData.username}
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="mb-4">
                     <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
                     <input 
-                      type="email" 
+                      type="email"
+                      name="email"
                       className="form-control" 
                       id="exampleInputEmail1" 
                       aria-describedby="emailHelp"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      value={userData.email}
+                      onChange={handleChange}
                     />
                     <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
                   </div>
@@ -67,15 +99,16 @@ function SigninPage() {
                     <input 
                       type="password" 
                       className="form-control" 
+                      name="password"
                       id="exampleInputPassword1"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      value={userData.password}
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="mb-4 form-check">
                     <label className="form-check-label" htmlFor="exampleCheck1">If you already have an account click here <a href="#" onClick={() => navigate('/login')}>Login</a></label>
                   </div>
-                  <button type="submit" className="btn btn-dark mb-3">Sign Up</button>
+                  <button type="submit" className="btn btn-dark mb-3" onClick={handleSubmit}>Sign Up</button>
                 </form>
               </div>
             </div>

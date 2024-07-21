@@ -1,6 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Profile() {
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.log('No token found, redirecting to sign-in page.');
+      navigate('/signup');
+      return;
+    }
+
+    const fetchUserProfile = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/profile', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          if (response.status === 401) {
+            console.log('Token is invalid, redirecting to sign-in page.');
+            navigate('/signin');
+          } else {
+            throw new Error('Failed to fetch user profile');
+          }
+        }
+
+        const data = await response.json();
+        setUser(data);
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+        navigate('/signin');
+      }
+    };
+
+    fetchUserProfile();
+  }, [navigate]);
+
+  if (!user) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
       <h3 style={{ 
@@ -33,11 +79,21 @@ function Profile() {
             marginBottom: '20px' 
           }} 
         />
-        <h5 style={{ marginBottom: '10px',marginBottom: '20px',fontWeight: 'bold',textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)',color: 'black',textAlign: 'center' }}>SAPNA RANI</h5>
-        <h6 style={{ marginBottom: '10px' }}>sapnarani14september@gmail.com</h6>
+        <h5 style={{ 
+          marginBottom: '20px', 
+          fontWeight: 'bold', 
+          textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)',
+          color: 'black', 
+          textAlign: 'center' 
+        }}>
+          {user.username.toUpperCase()}
+        </h5>
+        <h6 style={{ marginBottom: '10px' }}>
+          {user.email}
+        </h6>
       </div>
     </div>
-  )
+  );
 }
 
 export default Profile;

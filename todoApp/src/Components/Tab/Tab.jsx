@@ -6,9 +6,10 @@ function Tab() {
   const navigate = useNavigate(); // Use useNavigate instead of useHistory
 
   const handleLogout = () => {
-    // Implement the logic to log out the user
+    // Remove the token from localStorage
+    localStorage.removeItem('token');
     console.log('User logged out');
-    // Redirect to the home page or login page after logout
+    // Redirect to the login page after logout
     navigate('/login'); // Assuming you have a login route
   };
 
