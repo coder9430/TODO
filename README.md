@@ -86,7 +86,7 @@ Backend Setup
 ```
 4.Run the server:
 ```bash
-  npm start
+  npm run dev
 
 ```
 Frontend Setup
