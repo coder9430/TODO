@@ -9,7 +9,7 @@ function Profile() {
     const token = localStorage.getItem('token');
     if (!token) {
       console.log('No token found, redirecting to sign-in page.');
-      navigate('/signup');
+      navigate('/signin');
       return;
     }
 
@@ -36,7 +36,7 @@ function Profile() {
         setUser(data);
       } catch (error) {
         console.error('Error fetching user profile:', error);
-        navigate('/signin');
+        navigate('/signup');
       }
     };
 
