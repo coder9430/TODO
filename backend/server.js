@@ -1,19 +1,18 @@
-const express = require('express');
-const fs = require('fs-extra');
-const path = require('path');
-const cors = require('cors');
 require('dotenv').config();
-
+const express = require('express');
 const app = express();
+const authRoutes = require('./Routes/auth.route');
+const todoRoutes = require('./Routes/Todo.route');
+const cors = require('cors');
 
-// Middleware
-app.use(cors());
-app.use(express.json());
-
-// Routes
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/todos', require('./routes/todos'));
-
-// Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+app.use(express.json());
+app.use(cors())
+app.use('/api/auth', authRoutes);
+app.use("/api/todo",todoRoutes)
+
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

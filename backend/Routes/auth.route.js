@@ -1,53 +1,64 @@
 const express = require('express');
-const router = express.Router();
-const fs = require('fs-extra');
+const fs = require('fs');
 const path = require('path');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
+const router = express.Router();
 require('dotenv').config();
 
-const usersFilePath = path.join(__dirname, '../data/users.json');
+const usersFilePath = path.join(__dirname, 'users.json');
+const JWT_SECRET = process.env.JWT_SECRET;
 
-// Register
-router.post('/register', async (req, res) => {
-  const { name, email, password } = req.body;
+// Helper function to read users from the JSON file
+const readUsersFromFile = () => {
   try {
-    const users = await fs.readJson(usersFilePath);
-    const userExists = users.find(user => user.email === email);
-    if (userExists) return res.status(400).json({ msg: 'User already exists' });
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = { name, email, password: hashedPassword };
-    users.push(newUser);
-    await fs.writeJson(usersFilePath, users);
-
-    const payload = { user: { email } };
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-    res.json({ token });
+    const data = fs.readFileSync(usersFilePath, 'utf8');
+    return JSON.parse(data);
   } catch (err) {
-    res.status(500).send('Server Error');
+    console.error(err);
+    return [];
+  }
+};
+
+// Helper function to write users to the JSON file
+const writeUsersToFile = (users) => {
+  try {
+    fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// SignIn Route
+router.post('/signin', (req, res) => {
+  const { email, password } = req.body;
+  console.log(email,password)
+  const users = readUsersFromFile();
+  const user = users.find(u => u.email ===email && u.password === password);
+
+  if (user) {
+    // Generate a JWT token
+    const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '3h' });
+    res.status(200).json({ message: 'SignIn Successful', token });
+  } else {
+    res.status(401).json({ message: 'Invalid Credentials' });
   }
 });
 
-// Login
-router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const users = await fs.readJson(usersFilePath);
-    const user = users.find(user => user.email === email);
-    if (!user) return res.status(400).json({ msg: 'Invalid credentials' });
+// SignUp Route
+router.post('/signup', (req, res) => {
+  const { username, password, email } = req.body;
+  const users = readUsersFromFile();
+  const newUser = { id: users.length + 1, username, password, email };
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ msg: 'Invalid credentials' });
-
-    const payload = { user: { email } };
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-    res.json({ token });
-  } catch (err) {
-    res.status(500).send('Server Error');
+  // Check if the username or email already exists
+  const existingUser = users.find(u => u.username === username || u.email === email);
+  if (existingUser) {
+    return res.status(400).json({ message: 'Username or Email already exists' });
   }
+
+  users.push(newUser);
+  writeUsersToFile(users);
+  res.status(201).json({ message: 'User Registered', newUser });
 });
 
 module.exports = router;
