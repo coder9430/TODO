@@ -8,14 +8,14 @@ function Profile() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
-      console.log('No token found, redirecting to sign-in page.');
+     
       navigate('/signin');
       return;
     }
 
     const fetchUserProfile = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/profile', {
+        const response = await fetch('http://localhost:3000/api/auth/profile', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -24,24 +24,25 @@ function Profile() {
         });
 
         if (!response.ok) {
-          if (response.status === 401) {
-            console.log('Token is invalid, redirecting to sign-in page.');
-            navigate('/signin');
+          if (response.status === 404) {
+            
+            navigate('/login');
           } else {
             throw new Error('Failed to fetch user profile');
           }
+        } else {
+          const data = await response.json();
+          console.log(data.user);
+          setUser(data.user);
         }
-
-        const data = await response.json();
-        setUser(data);
       } catch (error) {
         console.error('Error fetching user profile:', error);
-        navigate('/signup');
+        // navigate('/signup');
       }
     };
 
     fetchUserProfile();
-  }, [navigate]);
+  }, []);
 
   if (!user) {
     return <div>Loading...</div>;
@@ -86,10 +87,10 @@ function Profile() {
           color: 'black', 
           textAlign: 'center' 
         }}>
-          {user.username.toUpperCase()}
+          {user?.username?.toUpperCase()}
         </h5>
         <h6 style={{ marginBottom: '10px' }}>
-          {user.email}
+          {user?.email}
         </h6>
       </div>
     </div>

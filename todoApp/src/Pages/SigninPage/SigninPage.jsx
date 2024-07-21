@@ -65,7 +65,7 @@ function SigninPage() {
         <div className="card" id='signinCard'>
           <div className="row">
             <div className="col-12 col-lg-4">
-              <Lottie options={defaultOptions} height={350} width={350} />
+              <Lottie options={defaultOptions} height={320} width={320} />
             </div>
             <div className="col-12 col-lg-8">
               <div className="form-card">
