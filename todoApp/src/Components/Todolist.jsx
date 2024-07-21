@@ -1,40 +1,41 @@
 import React, { useEffect, useState } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
+import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker from 'react-datepicker';
+import { IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 
 function Todolist({ initialDate }) {
   const [todos, setTodos] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(moment(initialDate, 'YYYY-MM-DD'));
+  const [selectedDate, setSelectedDate] = useState(moment(initialDate, 'YYYY-MM-DD').toDate());
   const token = localStorage.getItem('token');
 
   const fetchTodos = async (date) => {
-    // const formattedDate = date.format('YYYY-MM-DD'); // Format moment date to YYYY-MM-DD
-    if(initialDate){
-      console.log("sfh",initialDate)
-      try {
-        const response = await fetch(`http://localhost:3000/api/todo/${initialDate}`, {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
-        });
-        if (!response.ok) {
-          console.log("htlo")
-          throw new Error('Failed to fetch todos');
-        }
-        const data = await response.json();
-        setTodos(data);
-      } catch (error) {
-        console.error('Error fetching todos:', error);
+    const formattedDate = moment(date).format('YYYY-MM-DD');
+    console.log("Formatted Date:", formattedDate);
+    try {
+      const response = await fetch(`http://localhost:3000/api/todo/${formattedDate}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Failed to fetch todos');
       }
+      const data = await response.json();
+      setTodos(data);
+    } catch (error) {
+      console.error('Error fetching todos:', error);
     }
-   
   };
 
   useEffect(() => {
     fetchTodos(selectedDate);
-  }, []);
+  }, [selectedDate]);
 
   const deleteTodo = async (todoId) => {
     try {
@@ -105,11 +106,11 @@ function Todolist({ initialDate }) {
   return (
     <div className='card' style={{ background: '#ffffd4' }}>
       <div style={{ textAlign: 'center', margin: '20px 0' }}>
-        {/* <DatePicker
-          selected={selectedDate.toDate()} // Convert moment to Date for DatePicker
-          onChange={date => setSelectedDate(moment(date))} // Convert Date to moment
+        <DatePicker
+          selected={selectedDate}
+          onChange={date => setSelectedDate(date)}
           dateFormat="yyyy-MM-dd"
-        /> */}
+        />
       </div>
       {todos.length > 0 ? (
         <table className="table" style={{ background: '#ffffd4', color: 'black' }}>
@@ -130,19 +131,22 @@ function Todolist({ initialDate }) {
                 <td>{todo.title}</td>
                 <td>{todo.description}</td>
                 <td>
-                  <button className="btn btn-danger" onClick={() => deleteTodo(todo._id)}>
-                    <i className="fas fa-trash-alt"></i>
-                  </button>
+                  <IconButton color="error" onClick={() => deleteTodo(todo._id)}>
+                    <DeleteIcon />
+                  </IconButton>
                 </td>
                 <td>
-                  <button className="btn btn-primary" onClick={() => editTodo(todo._id)}>
-                    <i className="fas fa-edit"></i>
-                  </button>
+                  <IconButton color="primary" onClick={() => editTodo(todo._id)}>
+                    <EditIcon />
+                  </IconButton>
                 </td>
                 <td>
-                  <button className="btn btn-success" onClick={() => toggleStatus(todo._id)}>
-                    {todo.status === 'Done' ? <div>Done</div> : <i className="fas fa-times"></i>}
-                  </button>
+                  <IconButton
+                    color={todo.status === 'Done' ? 'success' : 'error'}
+                    onClick={() => toggleStatus(todo._id)}
+                  >
+                    {todo.status === 'Done' ? <CheckIcon /> : <CloseIcon />}
+                  </IconButton>
                 </td>
               </tr>
             ))}

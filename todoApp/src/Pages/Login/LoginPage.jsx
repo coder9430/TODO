@@ -46,7 +46,7 @@ function LoginPage() {
         <div className="card" id='loginCard'>
           <div className="row">
             <div className="col-12 col-lg-4">
-              <Lottie options={defaultOptions} height={400} width={400} />
+              <Lottie options={defaultOptions} height={350} width={350} />
             </div>
             <div className="col-12 col-lg-8">
               <div className="form-card">
