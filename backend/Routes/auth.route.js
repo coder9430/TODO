@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const jwt = require('jsonwebtoken');
+const authMiddleware = require('../middleware/authMiddleware');
 const router = express.Router();
 require('dotenv').config();
 
@@ -59,6 +60,19 @@ router.post('/signup', (req, res) => {
   users.push(newUser);
   writeUsersToFile(users);
   res.status(201).json({ message: 'User Registered', newUser });
+});
+
+router.get('/profile',authMiddleware, (req, res) => {
+  console.log("fgd")
+  const users = readUsersFromFile();
+  console.log(users)
+  const existingUser = users.find(u => u.username === req.user.username || u.email === req.user.email);
+  if (existingUser) {
+    console.log(existingUser)
+    return res.json({ user: existingUser });
+  }
+
+  res.status(404).json({ message: 'User Not Found' });
 });
 
 module.exports = router;

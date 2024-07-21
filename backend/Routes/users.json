@@ -1,6 +1,4 @@
 [
-  
-  
   {
     "id": 4,
     "username": "sapna",
@@ -12,5 +10,11 @@
     "username": "prachi",
     "password": "prachi",
     "email": "prachi@gmail.com"
+  },
+  {
+    "id": 3,
+    "username": "bikashchandra",
+    "password": "1234",
+    "email": "bikashchandra@gmail.com"
   }
 ]
